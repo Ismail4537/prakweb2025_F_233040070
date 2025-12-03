@@ -1,5 +1,5 @@
 {{-- Search filter --}}
-<div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-50 to-indigo-50">
+<div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-red from-blue-50 to-indigo-50">
     <form method="GET" action="{{ route('dashboard.index') }}" class="flex-1 max-w-md">
         <label for="search" class="sr-only">Search</label>
         <div class="relative">
@@ -12,7 +12,7 @@
             <button type="submit" class="absolute end-1.5 bottom-1.5 text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded text-xs px-3 py-1.5 focus:outline-none">Search</button>
         </div>
     </form>
-    <a href="{{ route('dashboard.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition-colors duration-200 whitespace-nowrap">
+    <a href="{{ route('dashboard.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-black font-medium rounded-lg shadow-sm transition-colors duration-200 whitespace-nowrap">
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M124v16m8-8H4"/>
         </svg>
@@ -26,6 +26,9 @@
             <tr>
                 <th scope="col" class="px-6 py-3 font-medium">
                     No
+                </th>
+                <th scope="col" class="px-6 py-3 font-medium">
+                    Image
                 </th>
                 <th scope="col" class="px-6 py-3 font-medium">
                     Title
@@ -44,8 +47,15 @@
         <tbody>
             @forelse ($posts as $post)
             <tr class="bg-neutral-primary border-b border-default">
+                <td class="px-6 py-4" align="center">
+                    {{ $posts->firstItem() + $loop->index }}
+                </td>
                 <td class="px-6 py-4">
-                    {{ $post->firstItem()+$loop->index }}
+                    @if($post->image)
+                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-16 h-16 rounded-base object-cover">
+                    @else
+                        <img id="preview" class="w-32 h-32 rounded-base object-cover border border-default bg-gray-100" src="{{ asset('images/preview.jpg') }}" alt="Image preview">
+                    @endif
                 </td>
                 <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
                     {{ $post->title }}

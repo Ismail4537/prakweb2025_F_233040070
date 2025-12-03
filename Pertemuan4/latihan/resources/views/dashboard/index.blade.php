@@ -2,10 +2,7 @@
     <x-slot:title>
         Dashboard
     </x-slot:title>
-    <x-slot:content>
-        <h1 class="text-4xl font-bold text-gray-800 mb-4">Welcome, {{ auth()->user()->name }}</h1>
-        @include('components.table')
-        {{-- Success Alert --}}
+    {{-- Success Alert --}}
         @if(session('success'))
             <div class="flex items-center p-4 mb-4 text-sm text-fg-success-strong rounded-base bg-success-soft border border-success-subtle" role="alert">
                 <svg class="w-4 h-4 me-2 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -20,5 +17,7 @@
                 </button>
             </div>
         @endif
-    </x-slot:content>
+        
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Welcome, {{ auth()->user()->name }}</h1>
+        @include('components.table')
 </x-dashboard-layout>

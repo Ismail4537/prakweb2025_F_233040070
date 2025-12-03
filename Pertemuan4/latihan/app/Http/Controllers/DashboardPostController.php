@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -42,6 +43,33 @@ class DashboardPostController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi input dengan custom messages
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'category_id' => 'required|exists:categories, id', // Memastikan ID ada di tabel categories
+            'excerpt' => 'required',
+            'body' => 'required',
+            // Aturan untuk Image: Opsional (nullable), harus gambar, format tertentu, max 2MB
+            'image' => 'nullable|image|mimes:jpeg, png, jpg,gif|max:2048',
+        ],
+        [
+            // Custom Messages
+            'title.required' => 'Field Title wajib diisi',
+            'title.max' => 'Field Title tidak boleh lebih dari 255 karakter',
+            'category_id.required' => 'Field Category wajib dipilih',
+            'category_id.exists' => 'Category yang dipilih tidak valid',
+            'excerpt.required' => 'Field Excerpt wajib diisi',
+            'body.required' => 'Field Content wajib diisi',
+            'image.image' => 'File harus berupa gambar',
+            'image.mimes' => 'Format gambar harus jpeg, png, jpg, atau gif',
+            'image.max' => 'Ukuran gambar maksimal 2MB',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $slug = Str::slug($request->title);
 
         $originalSlug = $slug;
@@ -51,12 +79,18 @@ class DashboardPostController extends Controller
             $counter++;
         }
 
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('post-images', 'public');
+        }
+
         Post::create([
             'title' => $request->title,
             'slug' => $slug,
             'category_id' => $request->category_id,
             'excerpt' => $request->excerpt,
             'body' => $request->body,
+            'image' => $imagePath,
             'user_id' => Auth::user()->id,
         ]);
 

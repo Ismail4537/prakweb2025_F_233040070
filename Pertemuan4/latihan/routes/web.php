@@ -24,5 +24,5 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/dashboard', [DashboardPostController::class, 'index'])->middleware(['auth','verified'])->name('dashboard.index');
 Route::get('/dashboard/create', [DashboardPostController::class, 'create'])->middleware(['auth','verified'])->name('dashboard.create');
-Route::get('/dashboard', [DashboardPostController::class, 'store'])->middleware(['auth','verified'])->name('dashboard.store');
+Route::post('/dashboard', [DashboardPostController::class, 'store'])->middleware(['auth','verified'])->name('dashboard.store');
 Route::get('/dashboard/{post:slug}', [DashboardPostController::class, 'show'])->middleware(['auth','verified'])->name('dashboard.show');
