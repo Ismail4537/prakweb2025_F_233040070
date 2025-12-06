@@ -1,4 +1,4 @@
-<x-layoutGuest>
+<x-layout>
     <x-slot:title>
         Login
     </x-slot:title>
@@ -26,4 +26,4 @@
             </table>
         </form>
     </x-slot:content>
-</x-layoutGuest>
+</x-layout>

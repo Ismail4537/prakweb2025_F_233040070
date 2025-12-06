@@ -1,4 +1,4 @@
-<x-layoutGuest>
+<x-layout>
     <x-slot:title>
         Register
     </x-slot:title>
@@ -19,4 +19,4 @@
             </form>
         </div>
     </x-slot:content>
-</x-layoutGuest>
+</x-layout>

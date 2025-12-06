@@ -24,7 +24,7 @@
         </div>
         <footer class="mt-8 pt-8 border-t border-gray-200">
             <div class="flex justify-between items-center">
-                <a href="{{ route('dashboard.index') }}"class="inline-flex items-center text-blue-600 hover: text-blue-800 font-medium">
+                <a href="{{ route('dashboard.posts.index') }}"class="inline-flex items-center text-blue-600 hover: text-blue-800 font-medium">
                 Back to Dashboard
                 </a>
             </div>
